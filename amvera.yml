@@ -1,0 +1,11 @@
+meta:
+  environment: python
+  toolchain:
+    name: pip
+    version: 3.9.7
+build:
+  requirementsPath: requirements.txt
+run:
+  scriptName: scheduler.py
+  persistenceMount: /data
+  containerPort: 80
