@@ -90,14 +90,14 @@ def download_pdfs(filename):
                 # make a GET request to download the PDF
                 response = requests.get(pdf_link)
                 
-                # ensure the './articles' directory exists
-                os.makedirs('./articles', exist_ok=True)
+                # ensure the '/data' directory exists
+                os.makedirs('/data', exist_ok=True)
                 
                 # write the content to a PDF file
-                with open(f'./articles/{id}.pdf', 'wb') as f:
+                with open(f'/data/{id}.pdf', 'wb') as f:
                     f.write(response.content)
                 
-                article['filepath'] = f'./articles/{id}.pdf'
+                article['filepath'] = f'/data/{id}.pdf'
             
             articles.append(article)
     
@@ -128,12 +128,12 @@ def main():
     articles = fetch_arxiv_articles("all:AI OR all:AGI OR all:LLM", 5)
     # save the articles to a CSV file
     print("Fetching fresh articles...")
-    save_articles_to_csv(articles, './db.csv')
+    save_articles_to_csv(articles, '/data/db.csv')
     print("Saved to csv...")
     print("Downloading PDFs...")
-    download_pdfs('./db.csv')
+    download_pdfs('/data/db.csv')
     print("All done!")
-    #checkfile('./db.csv')
+    #checkfile('/data/db.csv')
     
 
 if __name__ == "__main__":

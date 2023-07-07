@@ -14,7 +14,7 @@ async def send_messages(token, chat_id):
     fieldnames = ['id', 'link', 'title', 'pdf', 'filepath', 'blog_post', 'posted']
 
     # Open the CSV file for reading
-    with open('./db.csv', 'r') as csvfile:
+    with open('/data/db.csv', 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         
         # Read all articles into a list
@@ -34,7 +34,7 @@ async def send_messages(token, chat_id):
             break
             
     # Open the CSV file for writing
-    with open('./db.csv', 'w', newline='') as csvfile:
+    with open('/data/db.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header

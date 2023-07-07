@@ -228,7 +228,7 @@ def suggest_intro(text):
 
 def update_articles_with_blog_posts(openai_api_key):
     # Open the CSV file for reading
-    with open('./db.csv', 'r') as csvfile:
+    with open('/data/db.csv', 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         
         # Read all articles into a list
@@ -247,7 +247,7 @@ def update_articles_with_blog_posts(openai_api_key):
     fieldnames = ['id', 'link', 'title', 'pdf', 'filepath', 'blog_post', 'posted']
 
     # Open the CSV file for writing
-    with open('./db.csv', 'w', newline='') as csvfile:
+    with open('/data/db.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header
