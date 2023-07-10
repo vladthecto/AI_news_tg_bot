@@ -209,7 +209,7 @@ def suggest_intro(text):
     """    
     
     messages = [
-        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro to kick-off the post (up to 10 words). Examples: ""Здорово, народ! Сегодня у нас статья об искусственном интеллекте!"" "},
+        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro to kick-off the post (up to 10-15 words). Examples: ""Приветики, народ! Сегодня у нас статья о мультиагентных больших языковых моделях, лец го!"", ""Здорово-здорово! Сейчас поговорим про уязвимости больших языковых моделей."""},
         {"role": "user", "content": text}
     ]
 
@@ -234,14 +234,17 @@ def update_articles_with_blog_posts(openai_api_key):
         # Read all articles into a list
         articles = list(reader)
 
+    outro_phrase = "@robodream — chatGPT читает научные статьи и предлагает свои идеи продуктов"
+
     # Update the 'blog_post' field for each article
     for article in articles:
         if article['blog_post'] == "":
             filename = article['filepath']
             pre_summary = generate_summary(openai_api_key, filename)
             bot_message_en = summarize_and_suggest(pre_summary)
+            intro_phrase = suggest_intro(bot_message_en)
             bot_message_ru = translate_into_Russian(bot_message_en)
-            article['blog_post'] = bot_message_ru
+            article['blog_post'] = intro_phrase+'\n'+article['link']+'\n'+'\n'+bot_message_ru+'\n'+"___"+'\n'+outro_phrase
 
     # Define the field names for the CSV
     fieldnames = ['id', 'link', 'title', 'pdf', 'filepath', 'blog_post', 'posted']
