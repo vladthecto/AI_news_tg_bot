@@ -4,7 +4,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 
 def compose_message(data):
-    return data['link']+'\n'+data['blog_post']
+    return data['blog_post']
 
 async def send_messages(token, chat_id):
     bot = Bot(token=token)
@@ -19,6 +19,7 @@ async def send_messages(token, chat_id):
         
         # Read all articles into a list
         articles = list(reader)
+        articles.reverse()
 
     # Iterate over the articles
     for article in articles:
@@ -39,6 +40,8 @@ async def send_messages(token, chat_id):
         
         # Write the header
         writer.writeheader()
+
+        articles.reverse()
         
         # Write the updated articles
         writer.writerows(articles)

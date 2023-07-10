@@ -24,10 +24,10 @@ def form_ai_posts():
 def telegram_bot():
     run_script('telegram_bot.py')
 
-schedule.every().day.at("19:10").do(fetch_articles)
-schedule.every().day.at("19:30").do(form_ai_posts)
-schedule.every().day.at("19:50").do(telegram_bot)
-schedule.every().day.at("09:10").do(telegram_bot)
+schedule.every().day.at("10:30").do(fetch_articles)
+schedule.every().day.at("10:40").do(form_ai_posts)
+schedule.every().day.at("16:50").do(telegram_bot)
+schedule.every().day.at("10:58").do(telegram_bot)
 print('Jobs planned!')
 
 while True:
