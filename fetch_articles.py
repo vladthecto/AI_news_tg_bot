@@ -82,7 +82,7 @@ def download_pdfs(db_path, dbFilepath):
         
         # iterate over the articles
         for article in reader:
-            if article['filepath'] == "":
+            if article['filepath'] == "" and article['posted'] != "True":
                 # get the ID and PDF link
                 id = article['id']
                 pdf_link = article['pdf']
