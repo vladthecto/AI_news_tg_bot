@@ -226,9 +226,9 @@ def suggest_intro(text):
 
     return response['choices'][0]['message']['content']
 
-def update_articles_with_blog_posts(openai_api_key):
+def update_articles_with_blog_posts(openai_api_key, dbFilepath):
     # Open the CSV file for reading
-    with open('/data/db.csv', 'r') as csvfile:
+    with open(dbFilepath, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         
         # Read all articles into a list
@@ -250,7 +250,7 @@ def update_articles_with_blog_posts(openai_api_key):
     fieldnames = ['id', 'link', 'title', 'pdf', 'filepath', 'blog_post', 'posted']
 
     # Open the CSV file for writing
-    with open('/data/db.csv', 'w', newline='') as csvfile:
+    with open(dbFilepath, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header
@@ -263,8 +263,10 @@ def update_articles_with_blog_posts(openai_api_key):
 
 def main():
     openai_api_key = os.getenv('OPENAI_API_KEY')
+    db_path = os.getenv("DB_PATH")
+    dbFilepath = db_path+'db.csv'
     print("Processing texts with AI...")
-    update_articles_with_blog_posts(openai_api_key)
+    update_articles_with_blog_posts(openai_api_key, dbFilepath)
     print("AI works finished!")
 
 if __name__ == "__main__":

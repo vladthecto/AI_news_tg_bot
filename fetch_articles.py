@@ -73,11 +73,11 @@ def save_articles_to_csv(articles, filename):
                     "posted": False
                 })
 
-def download_pdfs(filename):
+def download_pdfs(db_path, dbFilepath):
     articles = []
     
     # read the CSV file
-    with open(filename, 'r') as csvfile:
+    with open(dbFilepath, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         
         # iterate over the articles
@@ -90,14 +90,16 @@ def download_pdfs(filename):
                 # make a GET request to download the PDF
                 response = requests.get(pdf_link)
                 
-                # ensure the '/data' directory exists
-                os.makedirs('/data', exist_ok=True)
+                # ensure the DB directory exists
+                os.makedirs(db_path, exist_ok=True)
+
+                pdfFilepath = db_path + f'{id}.pdf'
                 
                 # write the content to a PDF file
-                with open(f'/data/{id}.pdf', 'wb') as f:
+                with open(pdfFilepath, 'wb') as f:
                     f.write(response.content)
                 
-                article['filepath'] = f'/data/{id}.pdf'
+                article['filepath'] = pdfFilepath
             
             articles.append(article)
     
@@ -111,7 +113,7 @@ def download_pdfs(filename):
             writer.writerow(article)
     
     # replace the old CSV file with the new one
-    shutil.move('new.csv', filename)
+    shutil.move('new.csv', dbFilepath)
 
 def checkfile(filename):
 # open the csv file
@@ -125,15 +127,16 @@ def checkfile(filename):
 
 def main():
     # use this function to fetch the articles
+    db_path = os.getenv("DB_PATH")
+    dbFilepath = db_path+'db.csv'
     articles = fetch_arxiv_articles("all:AI OR all:AGI OR all:LLM", 5)
     # save the articles to a CSV file
     print("Fetching fresh articles...")
-    save_articles_to_csv(articles, '/data/db.csv')
+    save_articles_to_csv(articles, dbFilepath)
     print("Saved to csv...")
     print("Downloading PDFs...")
-    download_pdfs('/data/db.csv')
+    download_pdfs(db_path, dbFilepath)
     print("All done!")
-    #checkfile('/data/db.csv')
     
 
 if __name__ == "__main__":

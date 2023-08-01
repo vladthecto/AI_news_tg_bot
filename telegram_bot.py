@@ -6,15 +6,16 @@ from aiogram import Bot, Dispatcher, types
 def compose_message(data):
     return data['blog_post']
 
-async def send_messages(token, chat_id):
+async def send_messages(token, chat_id, db_path):
     bot = Bot(token=token)
     dp = Dispatcher(bot)
+    dbFilepath = db_path+'db.csv'
 
     # Define the field names for the CSV
     fieldnames = ['id', 'link', 'title', 'pdf', 'filepath', 'blog_post', 'posted']
 
     # Open the CSV file for reading
-    with open('/data/db.csv', 'r') as csvfile:
+    with open(dbFilepath, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         
         # Read all articles into a list
@@ -35,7 +36,7 @@ async def send_messages(token, chat_id):
             break
             
     # Open the CSV file for writing
-    with open('/data/db.csv', 'w', newline='') as csvfile:
+    with open(dbFilepath, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header
@@ -51,8 +52,9 @@ async def send_messages(token, chat_id):
 def main():
     tg_bot_token = os.getenv("TG_BOT_TOKEN")
     chat_id = os.getenv("CHAT_ID")
+    db_path = os.getenv("DB_PATH")
     print('Sending messages...')
-    asyncio.run(send_messages(tg_bot_token, chat_id))
+    asyncio.run(send_messages(tg_bot_token, chat_id, db_path))
     print('Message sent!')
 
 if __name__ == "__main__":
