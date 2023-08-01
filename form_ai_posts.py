@@ -129,9 +129,9 @@ def summarize_and_suggest(pre_summary):
          2.Assess the potential for the inferences described in the article to already be put into practice in the next few months. '\
          Give a score from 1 to 5, where 1 can be used in further research, but is not applicable in practice yet, and 5 can be used in '\
          applied solutions in a couple of months if there is an interested team. Formulate this part as "" My grade: <x> Elons out of 5."" and nothing else. '\
-         3.Add your brief retelling of this research paper and its conclusions - just 5 brief sentences, not more. Start this part with ""Summary:"" '\
-         4.Offer one imaginary future product based on the science from this paper and describe it just in 4-5 brief sentences, include a specific example of '\
-         its implementation in real life. Start this part with ""My vision:"". '\
+         3.Add your brief retelling of this research paper and its conclusions - just 3 brief sentences, not more. Start this part with ""Summary:"" '\
+         4.Offer one imaginary future product based on the science from this paper and describe it just in 3 brief sentences, include a specific example of '\
+         its implementation in real life. Start this part with ""My suggestion:"". '\
          Please try to use friendly, explanative and motivating tone of voice, pretend you're Elon Musk and you're explaining this paper results '\
          to high school students and motivating them to start up a project in this field."},
         {"role": "user", "content": text}
@@ -209,7 +209,7 @@ def suggest_intro(text):
     """    
     
     messages = [
-        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro to kick-off the post (up to 10-15 words). Examples: ""Приветики, народ! Сегодня у нас статья о мультиагентных больших языковых моделях, лец го!"", ""Здорово-здорово! Сейчас поговорим про уязвимости больших языковых моделей."""},
+        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro to kick-off the post (up to 10-15 words in Russian!). Examples: ""Приветики, народ! Сегодня у нас статья о мультиагентных больших языковых моделях, лец го!"", ""Здорово-здорово! Сейчас поговорим про уязвимости больших языковых моделей."""},
         {"role": "user", "content": text}
     ]
 
