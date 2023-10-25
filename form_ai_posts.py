@@ -98,7 +98,7 @@ def generate_summary(api_key, filename):
         i += 3
     return all_summaries  # Return the concatenated summaries
 
-def summarize_and_suggest(pre_summary):
+def summarize_and_suggest(pre_summary, title):
     """Summarizes pdf pages using openai
 
     Parameters
@@ -121,16 +121,7 @@ def summarize_and_suggest(pre_summary):
     text = pre_summary
     
     messages = [
-        {"role": "system", "content": "You are a helpfull assitant, Ted talks speaker, Harvard graduate and an incredibly experienced entrepreneur'\
-         in the technology sector who is known for being great at seeing scientific advances as opportunities to solve society's problems.'\
-         User will provide you with the summary of recently published research paper (it was done by AI, processing chunks of 3 pages each, '\
-         so ignore some possible inconsistency in the text). Please form your answer following this 3-parts logic: '\
-         1.Suggest an emoji which's the most appropriate for this paper based on your sentiment after reading, use this emoji as the first symbol of your answer. '\
-         2.Add your brief retelling of this research paper and its conclusions - just 3 brief sentences, not more. Start this part with ""Summary:"" '\
-         3.Offer one imaginary future product based on the science from this paper and describe it just in 3 brief sentences, include a specific example of '\
-         its implementation in real life. Start this part with ""My suggestion:"". '\
-         Please try to use friendly, explanative and motivating tone of voice, pretend you're Elon Musk and you're explaining this paper results '\
-         to high school students and motivating them to start up a project in this field."},
+        {"role": "system", "content": f"Given the following article from arxiv.org titled ' {title} ', summarize three key insights in a manner understandable to a high school student. For each insight, begin with a relevant emoji that encapsulates the essence of the insight."},
         {"role": "user", "content": text}
     ]
 
@@ -231,14 +222,15 @@ def update_articles_with_blog_posts(openai_api_key, dbFilepath):
         # Read all articles into a list
         articles = list(reader)
 
-    outro_phrase = "@robodream — chatGPT читает научные статьи и предлагает свои идеи продуктов"
+    outro_phrase = "@robodream — chatGPT читает научные статьи и подсвечивает инсайты"
 
     # Update the 'blog_post' field for each article
     for article in articles:
         if article['blog_post'] == "":
+            title = article['title']
             filename = article['filepath']
             pre_summary = generate_summary(openai_api_key, filename)
-            bot_message_en = summarize_and_suggest(pre_summary)
+            bot_message_en = summarize_and_suggest(pre_summary, title)
             intro_phrase = suggest_intro(bot_message_en)
             bot_message_ru = translate_into_Russian(bot_message_en)
             article['blog_post'] = intro_phrase+'\n'+article['link']+'\n'+'\n'+bot_message_ru+'\n'+"___"+'\n'+outro_phrase

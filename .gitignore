@@ -3,3 +3,4 @@ draft.ipynb
 .DS_Store
 db.csv
 data/
+tg_env/
