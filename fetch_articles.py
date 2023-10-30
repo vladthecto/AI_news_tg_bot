@@ -129,7 +129,7 @@ def main():
     # use this function to fetch the articles
     db_path = os.getenv("DB_PATH")
     dbFilepath = db_path+'db.csv'
-    articles = fetch_arxiv_articles("all:AI OR all:AGI OR all:LLM", 5)
+    articles = fetch_arxiv_articles("all:AI OR all:AGI OR all:LLM", 3)
     # save the articles to a CSV file
     print("Fetching fresh articles...")
     save_articles_to_csv(articles, dbFilepath)
