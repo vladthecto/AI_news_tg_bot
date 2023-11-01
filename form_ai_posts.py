@@ -222,7 +222,7 @@ def update_articles_with_blog_posts(openai_api_key, dbFilepath):
         # Read all articles into a list
         articles = list(reader)
 
-    outro_phrase = "@robodream — chatGPT читает научные статьи и подсвечивает инсайты"
+    outro_phrase = "@robodream — 3 ключевых инсайта по свежим научным статьям от chatGPT два раза в день"
 
     # Update the 'blog_post' field for each article
     for article in articles:
