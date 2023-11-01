@@ -197,7 +197,7 @@ def suggest_intro(text):
     """    
     
     messages = [
-        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro in Russian to kick-off the post (not more than 5-10 words in Russian!). Examples: ""Приветики, народ! Сегодня у нас статья о мультиагентных больших языковых моделях, лец го!"", ""Здорово-здорово! Сейчас поговорим про уязвимости больших языковых моделей."""},
+        {"role": "system", "content": f"You are a famous Russian public speaker and blogger. You can suggest a brilliant intro phrase to start any blog post. User will provide you with the main text of his post, and you will answer with a brief, friendly and informal intro in Russian to kick-off the post. Not more than 5-10 words in Russian - remember to be brief, it's very important! Examples: ""Приветики, народ! Сегодня у нас статья о мультиагентных больших языковых моделях, лец го!"", ""Здорово-здорово! Сейчас поговорим про уязвимости больших языковых моделей."""},
         {"role": "user", "content": text}
     ]
 

@@ -27,9 +27,8 @@ def telegram_bot():
 def cleanup_db():
     run_script('cleanup_db.py')
 
-#TODO exclude this func after migration
-def cleanup_db_migration_v2():
-    run_script('cleanup_db_migration_v2.py')
+#def cleanup_db_migration_v2():
+#    run_script('cleanup_db_migration_v2.py')
 
 schedule.every().day.at("10:30").do(fetch_articles)
 schedule.every().day.at("10:40").do(form_ai_posts)
@@ -37,8 +36,7 @@ schedule.every().day.at("16:50").do(telegram_bot)
 schedule.every().day.at("10:58").do(telegram_bot)
 schedule.every().day.at("09:15").do(cleanup_db)
 
-#TODO exclude this func after migration
-schedule.every().day.at("09:30").do(cleanup_db_migration_v2)
+#schedule.every().day.at("09:30").do(cleanup_db_migration_v2)
 
 print('Jobs planned!')
 
