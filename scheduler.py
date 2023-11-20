@@ -43,8 +43,8 @@ def run_http_server():
         print("serving at port", 8080)
         httpd.serve_forever()
 
-schedule.every().day.at("13:10").do(fetch_articles)
-schedule.every().day.at("13:15").do(form_ai_posts)
+schedule.every().day.at("13:30").do(fetch_articles)
+schedule.every().day.at("13:35").do(form_ai_posts)
 schedule.every().day.at("15:50").do(telegram_bot)
 schedule.every().day.at("10:58").do(telegram_bot)
 schedule.every().day.at("09:15").do(cleanup_db)
