@@ -46,8 +46,12 @@ def run_http_server():
 schedule.every().day.at("13:30").do(fetch_articles)
 schedule.every().day.at("13:35").do(form_ai_posts)
 schedule.every().day.at("15:50").do(telegram_bot)
+
+schedule.every().day.at("10:30").do(fetch_articles)
+schedule.every().day.at("10:35").do(form_ai_posts)
 schedule.every().day.at("10:58").do(telegram_bot)
-schedule.every().day.at("09:15").do(cleanup_db)
+
+schedule.every().day.at("15:59").do(cleanup_db)
 
 print('Jobs planned!')
 
