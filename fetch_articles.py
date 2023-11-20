@@ -32,6 +32,9 @@ def save_articles_to_csv(articles, filename):
     # define the CSV columns
     fieldnames = ["id", "link", "title", "pdf", "filepath", "blog_post", "posted"]
 
+    # ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
     # read the existing data
     try:
         with open(filename, 'r') as csvfile:
