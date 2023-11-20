@@ -3,6 +3,11 @@ import time
 import subprocess
 import traceback
 import os
+import http.server
+import socketserver
+import threading
+
+from http import HTTPStatus
 
 def run_script(script):
     try:
@@ -27,8 +32,16 @@ def telegram_bot():
 def cleanup_db():
     run_script('cleanup_db.py')
 
-#def cleanup_db_migration_v2():
-#    run_script('cleanup_db_migration_v2.py')
+class HealthCheckHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(HTTPStatus.OK)
+        self.end_headers()
+        self.wfile.write(b"OK")
+
+def run_http_server():
+    with socketserver.TCPServer(("", 8080), HealthCheckHandler) as httpd:
+        print("serving at port", 8080)
+        httpd.serve_forever()
 
 schedule.every().day.at("10:30").do(fetch_articles)
 schedule.every().day.at("10:40").do(form_ai_posts)
@@ -36,9 +49,12 @@ schedule.every().day.at("16:50").do(telegram_bot)
 schedule.every().day.at("10:58").do(telegram_bot)
 schedule.every().day.at("09:15").do(cleanup_db)
 
-#schedule.every().day.at("09:30").do(cleanup_db_migration_v2)
-
 print('Jobs planned!')
+
+# Run the HTTP server in a separate thread
+http_thread = threading.Thread(target=run_http_server)
+http_thread.daemon = True  # This ensures the thread will be killed when the main program exits
+http_thread.start()
 
 while True:
     schedule.run_pending()
